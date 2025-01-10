@@ -2,3 +2,4 @@
 *.idea/
 .python-version
 hello.py
+*/__pycache__/

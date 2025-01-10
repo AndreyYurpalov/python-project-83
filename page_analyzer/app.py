@@ -12,4 +12,6 @@ app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 
 @app.route('/')
 def index():
-    return 'Hello, World! It is my first progect'
+    return 'Hello, World! It is my first project'
+
+
