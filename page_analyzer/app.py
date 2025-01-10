@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask
 from dotenv import load_dotenv
 import os
 
@@ -12,6 +12,8 @@ app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 
 @app.route('/')
 def index():
-    return 'Hello, World! It is my first project'
+    return 'Hexlet project: Page Analyzer'
 
 
+if __name__ == '__main__':
+    app.run(debag=True)
