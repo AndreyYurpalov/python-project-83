@@ -1,19 +1,8 @@
--- Table: public.urls
-
--- DROP TABLE IF EXISTS public.urls;
-
-CREATE TABLE IF NOT EXISTS public.urls
+CREATE TABLE IF NOT EXISTS new_urls
 (
-    id bigint NOT NULL,
-    name text COLLATE pg_catalog."default" NOT NULL,
-    created_at time without time zone NOT NULL,
-    CONSTRAINT urls_pkey PRIMARY KEY (id)
+    id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
+    name character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    created_at date NOT NULL,
+    CONSTRAINT new_name_pkey PRIMARY KEY (id)
 )
 
-TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public.urls
-    OWNER to postgres;
-
-COMMENT ON TABLE public.urls
-    IS 'urls с полями id, name и created_at';
