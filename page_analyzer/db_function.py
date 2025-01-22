@@ -7,12 +7,12 @@ load_dotenv()
 DATABASE_URL = os.getenv('DATABASE_URL')
 
 
-def insert_data(data, today):
+def insert_data(data, created_at):
     connection = psycopg2.connect(DATABASE_URL)
     with connection.cursor() as curs:
         curs.execute("""INSERT INTO public.urls 
         (name, created_at) SELECT %s, %s WHERE NOT EXISTS 
-        (SELECT 1 FROM public.urls WHERE name = %s);""", (data, today, data))
+        (SELECT 1 FROM public.urls WHERE name = %s);""", (data, created_at, data,))
         connection.commit()
         connection.close()
 
@@ -54,6 +54,63 @@ def get_id_name_createdat(id):
     with connection.cursor() as curs:
         curs.execute("SELECT * FROM public.urls WHERE id = %s;", (id,))
         result = curs.fetchone()
+        connection.commit()
+        connection.close()
+        return result
+
+
+def insert_check_id_date(id, created_at):
+    connection = psycopg2.connect(DATABASE_URL)
+    with connection.cursor() as curs:
+        curs.execute("INSERT INTO public.url_checks (id, created_at) VALUES (%s, %s);", (id, created_at,))
+        connection.commit()
+        connection.close()
+
+
+def insert_check_date_whith_id_site(id, created_at):
+    connection = psycopg2.connect(DATABASE_URL)
+    with connection.cursor() as curs:
+        curs.execute("INSERT INTO public.url_checks (id, created_at) VALUES (%s, %s);", (id, created_at,))
+        connection.commit()
+        connection.close()
+
+
+def get_check_id():
+    connection = psycopg2.connect(DATABASE_URL)
+    with connection.cursor() as curs:
+        curs.execute("""SELECT url_id FROM public.url_checks WHERE id = %s;""")
+        result = curs.fetchone()
+        connection.commit()
+        connection.close()
+        return result
+
+
+def get_data_check(id):
+    connection = psycopg2.connect(DATABASE_URL)
+    with connection.cursor() as curs:
+        curs.execute("SELECT * FROM public.url_checks WHERE id = %s ORDER BY url_id DESC;", (id,))
+        result = curs.fetchall()
+        connection.commit()
+        connection.close()
+        return result
+
+
+def get_data_urls_check():
+    connection = psycopg2.connect(DATABASE_URL)
+    with connection.cursor() as curs:
+        curs.execute("SELECT * FROM public.url_checks;")
+        result = curs.fetchall()
+        connection.commit()
+        connection.close()
+        return result
+
+
+def get_max_date():
+    connection = psycopg2.connect(DATABASE_URL)
+    with connection.cursor() as curs:
+        sql1 = """SELECT id, MAX(created_at) AS max_created_at FROM public.url_checks GROUP BY id"""
+        curs.execute(sql1)
+        result = curs.fetchall()
         connection.commit()
         connection.close()
         return result
