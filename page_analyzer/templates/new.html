@@ -5,13 +5,22 @@
 {% block index %}
 
 {% if messages %}
-  <ul class=flashes >
+<div class="flash-message">
   {% for category, message in messages %}
-      <div class="flash-message in_base " style="background-color:PaleGreen; list-style: none;">
-        <li class="{{ category }}">{{ message }}</li>
-      </div>
+
+
+    {% if category == 'in_base' %}
+    <ul class=flashes style="list-style: none; background-color:Cyan">
+    <li class="{{ category }}">{{ message }}</li>
+    </ul>
+    {% endif %}
+  {% if category == 'added' %}
+    <ul class=flashes style="list-style: none; background-color:PaleGreen">
+    <li class="{{ category }}">{{ message }}</li>
+    </ul>
+    {% endif %}
   {% endfor %}
-  </ul>
+ </div>
 {% endif %}
 <body>
   <main class="flex-grow-1">
@@ -33,12 +42,14 @@
                 <td>{{ time }}</td>
               </tr>
             </tbody>
+
           </table>
         </div>
     </div>
   </main>
 <h2 class="mt-5 mb-3">Проверки</h2>
-  <form method="post" action="/urls/1/checks">
+  <form method="post" action="{{ check }}">
+
     <input type="submit" class="btn btn-primary" value="Запустить проверку">
   </form>
   <div>
@@ -53,6 +64,15 @@
           <th>Дата создания</th>
         </tr>
       </thead>
+      {% for line in table %}
+      <tbody>
+        <th>{{ line[1] }}</th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th>{{ line[6] }}</th>
+      </tbody>{% endfor %}
     </table>
   </div>
 

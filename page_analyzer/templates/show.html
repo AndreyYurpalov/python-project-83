@@ -23,12 +23,15 @@
     <tbody>
 
     {% for site in sites %}
-
     <tr>
       <th>{{ site[0] }}</th>
       <th><a href="urls/{{ site[0] }}">{{ site[1] }}</a></th>
-      <th>{{ site[2] }}</th>
-      <th>now 200</th>
+      {% for tab in table %}
+        {% if tab[0] == site[0] %}
+        <th>{{ tab[1] }}</th>
+        {% endif %}
+      {% endfor %}
+      <th></th>
     </tr>
     {% endfor %}
 
