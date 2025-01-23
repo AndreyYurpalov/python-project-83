@@ -1,5 +1,6 @@
 import os
 import requests
+from bs4 import BeautifulSoup
 from flask import (Flask, render_template, url_for,
                    request, redirect, flash, get_flashed_messages)
 from dotenv import load_dotenv
@@ -46,7 +47,7 @@ def get_site():
         id_name = get_id(url)[0]
         path = f'/urls/{id_name}'
         return redirect(path)
-    flash('Некорректный URL', 'nopage')
+    flash('Некорректный URL', 'no_page')
     return redirect(url_for('index'))
 
 
@@ -74,10 +75,18 @@ def get_check_site(id):
     url = get_id_name_createdat(id)[1]
     try:
         response = requests.get(f'https://{url}')
+        soup = BeautifulSoup(response.text, 'html.parser')
+        h1 = soup.find('h1').text
+        title = soup.find('title').text
+        meta_tags = soup.find_all('meta')
+        description = ''
+        for tag in meta_tags:
+            if tag.get('name') == 'description':
+                description = tag.get('content')
         status_code = response.status_code
         time_check = date.today()
-        insert_check_date_whith_id_site(id, status_code, time_check)
-    except:
+        insert_check_date_whith_id_site(id, status_code, h1, title, description, time_check)
+    except Exception:
         flash('Произошла ошибка при проверке', 'error')
     path = f'/urls/{id}'
     return redirect(path)
