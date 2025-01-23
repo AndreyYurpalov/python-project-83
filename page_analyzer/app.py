@@ -1,10 +1,12 @@
 import os
+import requests
 from flask import (Flask, render_template, url_for,
                    request, redirect, flash, get_flashed_messages)
 from dotenv import load_dotenv
 from datetime import date
 from page_analyzer.db_function import (is_url, get_data, insert_data, get_id, get_id_name_createdat,
-                                       get_max_date, insert_check_date_whith_id_site, get_data_check)
+                                       get_max_date, insert_check_date_whith_id_site, get_data_check,
+                                       )
 import validators
 from urllib.parse import urlparse
 
@@ -69,8 +71,14 @@ def get_site_information(id):
 @app.route('/urls/<id>/checks', methods=['POST'])
 def get_check_site(id):
     id = int(id)
-    time_check = date.today()
-    insert_check_date_whith_id_site(id, time_check)
+    url = get_id_name_createdat(id)[1]
+    try:
+        response = requests.get(f'https://{url}')
+        status_code = response.status_code
+        time_check = date.today()
+        insert_check_date_whith_id_site(id, status_code, time_check)
+    except:
+        flash('Произошла ошибка при проверке', 'error')
     path = f'/urls/{id}'
     return redirect(path)
 

@@ -67,10 +67,12 @@ def insert_check_id_date(id, created_at):
         connection.close()
 
 
-def insert_check_date_whith_id_site(id, created_at):
+
+
+def insert_check_date_whith_id_site(id, status_code, created_at):
     connection = psycopg2.connect(DATABASE_URL)
     with connection.cursor() as curs:
-        curs.execute("INSERT INTO public.url_checks (id, created_at) VALUES (%s, %s);", (id, created_at,))
+        curs.execute("INSERT INTO public.url_checks (id, status_code, created_at) VALUES (%s, %s, %s);", (id, status_code, created_at,))
         connection.commit()
         connection.close()
 
@@ -108,7 +110,7 @@ def get_data_urls_check():
 def get_max_date():
     connection = psycopg2.connect(DATABASE_URL)
     with connection.cursor() as curs:
-        sql1 = """SELECT id, MAX(created_at) AS max_created_at FROM public.url_checks GROUP BY id"""
+        sql1 = """SELECT id, status_code, MAX(created_at) AS max_created_at FROM public.url_checks GROUP BY id, status_code"""
         curs.execute(sql1)
         result = curs.fetchall()
         connection.commit()
