@@ -18,7 +18,12 @@
     <ul class=flashes style="list-style: none; background-color:PaleGreen">
     <li class="{{ category }}">{{ message }}</li>
     </ul>
-    {% endif %}
+  {% endif %}
+  {% if category == 'error' %}
+    <ul class=flashes style="list-style: none; background-color:RosyBrown">
+    <li class="{{ category }}">{{ message }}</li>
+    </ul>
+  {% endif %}
   {% endfor %}
  </div>
 {% endif %}
@@ -67,7 +72,7 @@
       {% for line in table %}
       <tbody>
         <th>{{ line[1] }}</th>
-          <th></th>
+          <th>{{ line[2] }}</th>
           <th></th>
           <th></th>
           <th></th>

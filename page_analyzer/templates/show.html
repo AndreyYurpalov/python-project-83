@@ -28,10 +28,12 @@
       <th><a href="urls/{{ site[0] }}">{{ site[1] }}</a></th>
       {% for tab in table %}
         {% if tab[0] == site[0] %}
+        <th>{{ tab[2] }}</th>
         <th>{{ tab[1] }}</th>
+        <th></th>
         {% endif %}
       {% endfor %}
-      <th></th>
+
     </tr>
     {% endfor %}
 
