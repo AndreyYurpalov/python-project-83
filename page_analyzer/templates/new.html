@@ -10,19 +10,20 @@
 
 
     {% if category == 'in_base' %}
-    <ul class=flashes style="list-style: none; background-color:Cyan">
-    <li class="{{ category }}">{{ message }}</li>
-    </ul>
+     <div class="alert alert-info" role="alert">
+     Страница уже существует
+     </div>
     {% endif %}
   {% if category == 'added' %}
-    <ul class=flashes style="list-style: none; background-color:PaleGreen">
-    <li class="{{ category }}">{{ message }}</li>
-    </ul>
+    <div class="alert alert-success" role="alert">
+      Страница успешно добавлена
+    </div>
   {% endif %}
+
   {% if category == 'error' %}
-    <ul class=flashes style="list-style: none; background-color:RosyBrown">
-    <li class="{{ category }}">{{ message }}</li>
-    </ul>
+  <div class="alert alert-danger" role="alert">
+  Произошла ошибка при проверке
+  </div>
   {% endif %}
   {% endfor %}
  </div>
@@ -58,7 +59,7 @@
     <input type="submit" class="btn btn-primary" value="Запустить проверку">
   </form>
   <div>
-    <table class="table table-bordered table-hover mt-2" data-test="checks">
+    <table class="table table-bordered table-hover" data-test="checks">
       <thead>
         <tr>
           <th>ID</th>
@@ -71,12 +72,12 @@
       </thead>
       {% for line in table %}
       <tbody>
-        <th>{{ line[1] }}</th>
-          <th>{{ line[2] }}</th>
-          <th>{{ line[3] }}</th>
-          <th>{{ line[4] }}</th>
-          <th>{{ line[5] }}</th>
-          <th>{{ line[6] }}</th>
+        <th style="font-weight: 400">{{ line[1] }}</th>
+          <th style="font-weight: 400">{{ line[2] }}</th>
+          <th style="font-weight: 400">{{ line[3] }}</th>
+          <th style="font-weight: 400">{{ line[4] }}</th>
+          <th style="font-weight: 400">{{ line[5] }}</th>
+          <th style="font-weight: 400">{{ line[6] }}</th>
       </tbody>{% endfor %}
     </table>
   </div>

@@ -24,13 +24,12 @@
 
     {% for site in sites %}
     <tr>
-      <th>{{ site[0] }}</th>
-      <th><a href="urls/{{ site[0] }}">{{ site[1] }}</a></th>
+      <th style="font-weight: 400">{{ site[0] }}</th>
+      <th style="font-weight: 400"><a href="urls/{{ site[0] }}">{{ site[1] }}</a></th>
       {% for tab in table %}
         {% if tab[0] == site[0] %}
-        <th>{{ tab[2] }}</th>
-        <th>{{ tab[1] }}</th>
-        <th></th>
+        <th style="font-weight: 400">{{ tab[2] }}</th>
+        <th style="font-weight: 400">{{ tab[1] }}</th>
         {% endif %}
       {% endfor %}
 
