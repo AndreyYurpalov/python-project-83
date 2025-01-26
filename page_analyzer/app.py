@@ -76,8 +76,12 @@ def get_check_site(id):
     try:
         response = requests.get(f'{url}')
         soup = BeautifulSoup(response.text, 'html.parser')
-        h1 = soup.find('h1').text
-        title = soup.find('title').text
+        h1 = ''
+        if soup.find('h1'):
+            h1 = soup.find('h1').text
+        title = ''
+        if soup.find('title'):
+            title = soup.find('title').text
         meta_tags = soup.find_all('meta')
         description = ''
         for tag in meta_tags:

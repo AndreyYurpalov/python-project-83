@@ -72,8 +72,9 @@ def insert_check_id_date(id, created_at):
 def insert_check_date_whith_id_site(id, status_code, h1, title, description, created_at):
     connection = psycopg2.connect(DATABASE_URL)
     with connection.cursor() as curs:
-        curs.execute("INSERT INTO public.url_checks (id, status_code, h1, title, description, created_at) VALUES (%s, %s, %s, %s, %s, %s);",
-                     (id, status_code, h1, title, description, created_at,))
+        curs.execute("""INSERT INTO public.url_checks (id, url_id, status_code, h1, title, description, created_at)
+                      VALUES (%s, default, %s, %s, %s, %s, %s);""",
+                     (id, status_code, h1, title, description, created_at))
         connection.commit()
         connection.close()
 
