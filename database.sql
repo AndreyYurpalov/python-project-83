@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS public.urls
+CREATE TABLE public.urls
 (
     id bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     name character varying(255) NOT NULL,
@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS public.urls
 );
 
 
-CREATE TABLE IF NOT EXISTS public.url_checks
+CREATE TABLE public.url_checks
 (
     id bigint NOT NULL,
     url_id bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
