@@ -7,80 +7,77 @@
 {% if messages %}
 <div class="flash-message">
   {% for category, message in messages %}
-
-
     {% if category == 'in_base' %}
-     <div class="alert alert-info" role="alert">
-     Страница уже существует
-     </div>
+      <div class="alert alert-info" role="alert">
+        Страница уже существует
+      </div>
     {% endif %}
-  {% if category == 'added' %}
-    <div class="alert alert-success" role="alert">
-      Страница успешно добавлена
-    </div>
-  {% endif %}
+    {% if category == 'added' %}
+      <div class="alert alert-success" role="alert">
+        Страница успешно добавлена
+      </div>
+    {% endif %}
+    {% if category == 'error' %}
+      <div class="alert alert-danger" role="alert">
+        Произошла ошибка при проверке
+      </div>
+    {% endif %}
+    {% endfor %}
+       </div>
+    {% endif %}
 
-  {% if category == 'error' %}
-  <div class="alert alert-danger" role="alert">
-  Произошла ошибка при проверке
-  </div>
-  {% endif %}
-  {% endfor %}
- </div>
-{% endif %}
-<body>
   <main class="flex-grow-1">
     <div class="container-lg mt-3">
       <h1>Сайт: {{ url }}</h1>
-        <div class="table-responsive">
-          <table class="table table-bordered table-hover text-nowrap" data-test="url">
-            <tbody >
-              <tr>
-                <td>ID</td>
-                <td>{{ id }}</td>
-              </tr>
-              <tr>
-                <td>Имя</td>
-                <td>{{ url }}</td>
-              </tr>
-              <tr>
-                <td>Дата создания</td>
-                <td>{{ time }}</td>
-              </tr>
-            </tbody>
 
-          </table>
-        </div>
-    </div>
-  </main>
-<h2 class="mt-5 mb-3">Проверки</h2>
-  <form method="post" action="{{ check }}">
-
-    <input type="submit" class="btn btn-primary" value="Запустить проверку">
-  </form>
-  <div>
-    <table class="table table-bordered table-hover" data-test="checks">
-      <thead>
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover text-nowrap" data-test="url">
+      <tbody >
         <tr>
-          <th>ID</th>
-          <th>Код ответа</th>
-          <th>h1</th>
-          <th>title</th>
-          <th>description</th>
-          <th>Дата создания</th>
+          <td>ID</td>
+          <td>{{ id }}</td>
         </tr>
-      </thead>
-      {% for line in table %}
-      <tbody>
-        <th style="font-weight: 400">{{ line[1] }}</th>
-          <th style="font-weight: 400">{{ line[2] }}</th>
-          <th style="font-weight: 400">{{ line[3] }}</th>
-          <th style="font-weight: 400">{{ line[4] }}</th>
-          <th style="font-weight: 400">{{ line[5] }}</th>
-          <th style="font-weight: 400">{{ line[6] }}</th>
-      </tbody>{% endfor %}
+        <tr>
+          <td>Имя</td>
+          <td>{{ url }}</td>
+        </tr>
+        <tr>
+          <td>Дата создания</td>
+          <td>{{ time }}</td>
+        </tr>
+      </tbody>
     </table>
   </div>
 
-</body>
+<h2 class="mt-5 mb-3">Проверки</h2>
+  <form method="post" action="{{ check }}">
+    <input type="submit" class="btn btn-primary" value="Запустить проверку">
+  </form>
+<div>
+  <table class="table table-bordered table-hover" data-test="checks">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Код ответа</th>
+        <th>h1</th>
+        <th>title</th>
+        <th>description</th>
+        <th>Дата создания</th>
+      </tr>
+    </thead>
+      <tbody>
+      {% for line in table %}
+      <tr></tr>
+        <th style="font-weight: 400">{{ line[1] }}</th>
+        <th style="font-weight: 400">{{ line[2] }}</th>
+        <th style="font-weight: 400">{{ line[3] }}</th>
+        <th style="font-weight: 400">{{ line[4] }}</th>
+        <th style="font-weight: 400">{{ line[5] }}</th>
+        <th style="font-weight: 400">{{ line[6] }}</th>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
 {% endblock %}

@@ -8,36 +8,36 @@
   <main class="flex-grow-1">
     <div class="container-lg mt-3">
       <h1>Сайты</h1>
-    </div>
+
 
     <div class="table-responsive">
-  <table class="table table-bordered table-hover text-nowrap" data-test="urls">
-    <thead>
-    <tr>
-      <th>ID</th>
-      <th >Имя</th>
-      <th>Последняя проверка</th>
-      <th>Код ответа</th>
-    </tr>
-    </thead>
-    <tbody>
+      <table class="table table-bordered table-hover text-nowrap" data-test="urls">
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th >Имя</th>
+          <th>Последняя проверка</th>
+          <th>Код ответа</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for site in sites %}
+        <tr style="font-weight: 400">
+          <th style="font-weight: 400">{{ site[0] }}</th>
+          <th style="font-weight: 400"><a href="urls/{{ site[0] }}">{{ site[1] }}</a></th>
+          {% for tab in table %}
+            {% if tab[0] == site[0] %}
+            <th style="font-weight: 400">{{ tab[2] }}</th>
+            <th style="font-weight: 400">{{ tab[1] }}</th>
+            {% endif %}
+          {% endfor %}
 
-    {% for site in sites %}
-    <tr>
-      <th style="font-weight: 400">{{ site[0] }}</th>
-      <th style="font-weight: 400"><a href="urls/{{ site[0] }}">{{ site[1] }}</a></th>
-      {% for tab in table %}
-        {% if tab[0] == site[0] %}
-        <th style="font-weight: 400">{{ tab[2] }}</th>
-        <th style="font-weight: 400">{{ tab[1] }}</th>
-        {% endif %}
-      {% endfor %}
+        </tr>
+        {% endfor %}
 
-    </tr>
-    {% endfor %}
-
-    </tbody>
+        </tbody>
   </table>
+    </div>
     </div>
   </main>
   </body>
