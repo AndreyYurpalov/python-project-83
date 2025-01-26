@@ -48,7 +48,7 @@ def get_site():
         path = f'/urls/{id_name}'
         return redirect(path)
     flash('Некорректный URL', 'no_page')
-    return redirect(url_for('index'), 422)
+    return redirect(url_for('index'))
 
 
 @app.route('/urls/<id>', methods=['GET'])
@@ -76,7 +76,6 @@ def get_check_site(id):
     try:
         response = requests.get(f'{url}')
         soup = BeautifulSoup(response.text, 'html.parser')
-        print('SOUP',  soup)
         h1 = soup.find('h1').text
         title = soup.find('title').text
         meta_tags = soup.find_all('meta')
