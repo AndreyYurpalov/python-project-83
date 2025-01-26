@@ -1,14 +1,14 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/AndreyYurpalov/python-project-83/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/AndreyYurpalov/python-project-83/actions)
 
-<h2>Анализатор страниц</h2>
+# Анализатор страниц
 
 Сайт проверки сайтов на SEO-пригодность
 Позволяет получить тему, заголовок и описание сайта
 
 Ссылка на web-site: https://python-project-83-3-fzb1.onrender.com
 
-<h3>В проекте использован Python 3.10, Pip 24.3.1, uv 0.5.16</h3>
+## В проекте использован Python 3.10, Pip 24.3.1, uv 0.5.16
 
 Для разработки использовались следующие инструменты:
 
