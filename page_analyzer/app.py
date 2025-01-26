@@ -74,8 +74,9 @@ def get_check_site(id):
     id = int(id)
     url = get_id_name_createdat(id)[1]
     try:
-        response = requests.get(f'https://{url}')
+        response = requests.get(f'{url}')
         soup = BeautifulSoup(response.text, 'html.parser')
+        print('SOUP',  soup)
         h1 = soup.find('h1').text
         title = soup.find('title').text
         meta_tags = soup.find_all('meta')
