@@ -74,7 +74,7 @@ def get_check_site(id):
     id = int(id)
     url = get_id_name_createdat(id)[1]
     try:
-        response = requests.get(f'https://{url}')
+        response = requests.get(f'{url}')
         soup = BeautifulSoup(response.text, 'html.parser')
         h1 = soup.find('h1').text
         title = soup.find('title').text
@@ -86,7 +86,8 @@ def get_check_site(id):
         status_code = response.status_code
         time_check = date.today()
         insert_check_date_whith_id_site(id, status_code, h1, title, description, time_check)
-    except Exception:
+    except Exception as e:
+        print(e)
         flash('Произошла ошибка при проверке', 'error')
     path = f'/urls/{id}'
     return redirect(path)
