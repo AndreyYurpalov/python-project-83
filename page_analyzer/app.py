@@ -48,7 +48,7 @@ def get_site():
         path = f'/urls/{id_name}'
         return redirect(path)
     flash('Некорректный URL', 'no_page')
-    return redirect(url_for('index'))
+    return redirect(url_for('index'), 422)
 
 
 @app.route('/urls/<id>', methods=['GET'])
@@ -87,7 +87,8 @@ def get_check_site(id):
         status_code = response.status_code
         time_check = date.today()
         insert_check_date_whith_id_site(id, status_code, h1, title, description, time_check)
-    except Exception:
+    except Exception as e:
+        print(e)
         flash('Произошла ошибка при проверке', 'error')
     path = f'/urls/{id}'
     return redirect(path)
