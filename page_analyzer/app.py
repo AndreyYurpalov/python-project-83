@@ -1,15 +1,31 @@
 import os
-import requests
-from bs4 import BeautifulSoup
-from flask import (Flask, render_template, url_for,
-                   request, redirect, flash, get_flashed_messages)
-from dotenv import load_dotenv
 from datetime import date
-from page_analyzer.db_function import (is_url, get_data, insert_data, get_id, get_id_name_createdat,
-                                       get_max_date, insert_check_date_whith_id_site, get_data_check,
-                                       )
-import validators
 from urllib.parse import urlparse
+
+import requests
+import validators
+from bs4 import BeautifulSoup
+from dotenv import load_dotenv
+from flask import (
+    Flask,
+    flash,
+    get_flashed_messages,
+    redirect,
+    render_template,
+    request,
+    url_for,
+)
+
+from page_analyzer.db_function import (
+    get_data,
+    get_data_check,
+    get_id,
+    get_id_name_createdat,
+    get_max_date,
+    insert_check_date_whith_id_site,
+    insert_data,
+    is_url,
+)
 
 load_dotenv()
 
@@ -29,7 +45,12 @@ def get_sites():
     sites = get_data()
     table = get_max_date()
     messages = get_flashed_messages(with_categories=True)
-    return render_template('show.html', sites=sites, table=table, messages=messages)
+    return render_template(
+        'show.html',
+        sites=sites,
+        table=table,
+        messages=messages,
+    )
 
 
 @app.route('/urls', methods=['POST'])
@@ -65,7 +86,12 @@ def get_site_information(id):
         check = f'/urls/{id}/checks'
         return render_template(
             'new.html',
-            id=id, url=url, time=time, messages=messages, table=table, check=check)
+            id=id,
+            url=url,
+            time=time,
+            messages=messages,
+            table=table,
+            check=check,)
     return render_template('nopage.html')
 
 
@@ -89,7 +115,8 @@ def get_check_site(id):
                 description = tag.get('content')
         status_code = response.status_code
         time_check = date.today()
-        insert_check_date_whith_id_site(id, status_code, h1, title, description, time_check)
+        insert_check_date_whith_id_site(id, status_code, h1, title,
+                                        description, time_check)
     except Exception as e:
         print(e)
         flash('Произошла ошибка при проверке', 'error')

@@ -26,7 +26,7 @@
           <th style="font-weight: 400">{{ site[0] }}</th>
           <th style="font-weight: 400"><a href="urls/{{ site[0] }}">{{ site[1] }}</a></th>
           {% for tab in table %}
-            {% if tab[0] == site[0] %}
+            {% if tab[0] == site[0] and tab[1] == 200 %}
             <th style="font-weight: 400">{{ tab[2] }}</th>
             <th style="font-weight: 400">{{ tab[1] }}</th>
             {% endif %}
