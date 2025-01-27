@@ -58,7 +58,7 @@ def get_site():
     url = request.form.to_dict().get('url')
     if validators.url(url):
         url = f'{urlparse(url).scheme}://{urlparse(url).netloc}'
-        if is_url(url):
+        if int(is_url(url)):
             flash('Страница уже существует', 'in_base')
         else:
             name = url
