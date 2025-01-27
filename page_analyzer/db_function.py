@@ -37,7 +37,7 @@ def is_url(url):
         sql_url = """SELECT CAST
                      (CASE WHEN EXISTS
                      (SELECT 1 FROM public.urls WHERE name = %s)
-                     THEN 1 ELSE 0 END AS BIT) AS IsUserExist;"""
+                     THEN 1 ELSE 0 END AS BIT);"""
         curs.execute(sql_url, (url,))
         result = curs.fetchone()[0]
         connection.commit()
