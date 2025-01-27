@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS public.urls
     id bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     name character varying(255) NOT NULL,
     created_at date
-)
+);
 
 
 CREATE TABLE IF NOT EXISTSpublic.url_checks
@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTSpublic.url_checks
         REFERENCES public.urls (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
-)
+);
 
 
 TRUNCATE public.urls, public.url_checks RESTART IDENTITY;
