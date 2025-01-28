@@ -71,10 +71,9 @@ def get_site():
             name = url
             created_at = date.today()
             insert_data(name, created_at)
-            flash('Страница успешно добавлена', 'added')
-        id_name = get_id(url)[0]
-        path = f'/urls/{id_name}'
-        return redirect(path)
+            flash('Страница успешно добавлена', 'success')
+        id = get_id(url)[0]
+        return redirect(url_for('get_site_information', id=id))
     else:
         flash('Некорректный URL', 'no_page')
         return redirect(url_for('index', value=url, code=422))
@@ -125,11 +124,10 @@ def get_check_site(id):
         time_check = date.today()
         insert_check_date_whith_id_site(id, status_code, h1, title,
                                         description, time_check)
-        flash('Страница успешно проверена', 'success')
+        flash('Страница успешно проверена', 'checked')
     except Exception:
         flash('Произошла ошибка при проверке', 'error')
-    path = f'/urls/{id}'
-    return redirect(path)
+    return redirect(url_for('get_site_information', id=id))
 
 
 if __name__ == '__main__':

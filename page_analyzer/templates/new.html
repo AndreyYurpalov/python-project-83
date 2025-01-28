@@ -10,13 +10,13 @@
     {% if category == 'in_base' %}
       <div class="alert alert-info" role="alert">Страница уже существует</div>
     {% endif %}
-    {% if category == 'added' %}
+    {% if category == 'success' %}
       <div class="alert alert-success" role="alert">Страница успешно добавлена</div>
     {% endif %}
     {% if category == 'error' %}
       <div class="alert alert-danger" role="alert">Произошла ошибка при проверке</div>
     {% endif %}
-    {% if category == 'success' %}
+    {% if category == 'checked' %}
       <div class="alert alert-success" role="alert">Страница успешно проверена</div>
     {% endif %}
   {% endfor %}
