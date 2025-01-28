@@ -42,8 +42,9 @@ def index():
         return render_template('index.html',
                                messages=messages, value=value,)
     else:
+        code = request.args.get('code')
         return render_template('index.html',
-                               messages=messages,)
+                               messages=messages, code=code)
 
 
 @app.route('/urls')
@@ -76,7 +77,7 @@ def get_site():
         return redirect(path)
     else:
         flash('Некорректный URL', 'no_page')
-        return redirect(url_for('index', value=url))
+        return redirect(url_for('index', value=url, code=422))
 
 
 @app.route('/urls/<id>', methods=['GET'])
