@@ -98,7 +98,8 @@ def get_site_information(id):
             messages=messages,
             table=table,
             check=check,)
-    return redirect('nopage')
+    print('Test for 422')
+    return redirect('new.html')
 
 
 @app.route('/urls/<id>/checks', methods=['POST'])
