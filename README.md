@@ -24,6 +24,8 @@ Validators — модуль для проверки данных на соотв
 
 BeautifulSoup — эбиблиотека Python, используемая для парсинга HTML и XML документов
 
+ruff - линтер для uv
+
 ## Clon project
 ```python3
 git clone https://github.com/AndreyYurpalov/python-project-83.git
