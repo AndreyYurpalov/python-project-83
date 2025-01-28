@@ -74,8 +74,9 @@ def get_site():
         id_name = get_id(url)[0]
         path = f'/urls/{id_name}'
         return redirect(path)
-    flash('Некорректный URL', 'no_page')
-    return redirect(url_for('index', value=url))
+    else:
+        flash('Некорректный URL', 'no_page')
+        return redirect(url_for('index', value=url))
 
 
 @app.route('/urls/<id>', methods=['GET'])
