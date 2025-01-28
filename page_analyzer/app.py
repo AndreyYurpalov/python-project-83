@@ -38,9 +38,12 @@ DATABASE_URL = os.getenv('DATABASE_URL')
 def index():
     messages = get_flashed_messages(with_categories=True)
     value = request.args.get('value')
-    return render_template('index.html',
-                           messages=messages,
-                           value=value,)
+    if value:
+        return render_template('index.html',
+                               messages=messages, value=value,)
+    else:
+        return render_template('index.html',
+                               messages=messages,)
 
 
 @app.route('/urls')
@@ -71,8 +74,6 @@ def get_site():
         id_name = get_id(url)[0]
         path = f'/urls/{id_name}'
         return redirect(path)
-    print(url)
-
     flash('Некорректный URL', 'no_page')
     return redirect(url_for('index', value=url))
 
@@ -97,7 +98,7 @@ def get_site_information(id):
             messages=messages,
             table=table,
             check=check,)
-    return render_template('nopage.html')
+    return redirect('nopage')
 
 
 @app.route('/urls/<id>/checks', methods=['POST'])
@@ -122,8 +123,7 @@ def get_check_site(id):
         time_check = date.today()
         insert_check_date_whith_id_site(id, status_code, h1, title,
                                         description, time_check)
-    except Exception as e:
-        print(e)
+    except Exception:
         flash('Произошла ошибка при проверке', 'error')
     path = f'/urls/{id}'
     return redirect(path)

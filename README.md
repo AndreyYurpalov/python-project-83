@@ -1,5 +1,7 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/AndreyYurpalov/python-project-83/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/AndreyYurpalov/python-project-83/actions)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/715d14638b2ff5ea7c11/test_coverage)](https://codeclimate.com/github/AndreyYurpalov/python-project-83/test_coverage)
+[![Maintainability](https://api.codeclimate.com/v1/badges/715d14638b2ff5ea7c11/maintainability)](https://codeclimate.com/github/AndreyYurpalov/python-project-83/maintainability)
 
 # Анализатор страниц
 
