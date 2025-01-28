@@ -80,13 +80,13 @@ def get_site():
 
 @app.route('/urls/<id>', methods=['GET'])
 def get_site_information(id):
-    data = get_id_name_createdat(id)
-    check_time = data[2]
-    name = data[1]
-    insert_data(name, check_time)
     messages = get_flashed_messages(with_categories=True)
     data = get_id_name_createdat(id)
     if data:
+        data = get_id_name_createdat(id)
+        check_time = data[2]
+        name = data[1]
+        insert_data(name, check_time)
         id, url, time = data[0], data[1], data[2]
         table = get_data_check(id)
         check = f'/urls/{id}/checks'
@@ -98,11 +98,10 @@ def get_site_information(id):
             messages=messages,
             table=table,
             check=check,)
-    print('Test for 422')
-    return redirect('new.html')
+    return render_template('nopage.html')
 
 
-@app.route('/urls/<id>/checks', methods=['POST'])
+@app.route('/urls/<id>/checks', methods=['POST', 'GET'])
 def get_check_site(id):
     id = int(id)
     url = get_id_name_createdat(id)[1]
