@@ -124,6 +124,7 @@ def get_check_site(id):
         time_check = date.today()
         insert_check_date_whith_id_site(id, status_code, h1, title,
                                         description, time_check)
+        flash('Страница успешно проверена', 'success')
     except Exception:
         flash('Произошла ошибка при проверке', 'error')
     path = f'/urls/{id}'

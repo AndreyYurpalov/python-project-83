@@ -22,6 +22,11 @@
         Произошла ошибка при проверке
       </div>
     {% endif %}
+    {% if category == 'success' %}
+      <div class="alert alert-success" role="alert">
+        Страница успешно проверена
+      </div>
+    {% endif %}
     {% endfor %}
        </div>
     {% endif %}
