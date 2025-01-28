@@ -37,7 +37,10 @@ DATABASE_URL = os.getenv('DATABASE_URL')
 @app.route('/')
 def index():
     messages = get_flashed_messages(with_categories=True)
-    return render_template('index.html', messages=messages)
+    value = request.args.get('value')
+    return render_template('index.html',
+                           messages=messages,
+                           value=value,)
 
 
 @app.route('/urls')
@@ -68,8 +71,10 @@ def get_site():
         id_name = get_id(url)[0]
         path = f'/urls/{id_name}'
         return redirect(path)
+    print(url)
+
     flash('Некорректный URL', 'no_page')
-    return redirect(url_for('index'))
+    return redirect(url_for('index', value=url))
 
 
 @app.route('/urls/<id>', methods=['GET'])
