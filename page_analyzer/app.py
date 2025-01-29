@@ -64,7 +64,7 @@ def get_site():
                                messages=messages, value=url), 422
     url = f'{urlparse(url).scheme}://{urlparse(url).netloc}'
     if int(is_url(url)):
-        flash('Страница уже существует', 'in_base')
+        flash('Страница уже существует', 'info')
     else:
         name = url
         created_at = date.today()
@@ -119,9 +119,10 @@ def get_check_site(id):
         time_check = date.today()
         insert_check_date_whith_id_site(id, status_code, h1, title,
                                         description, time_check)
-        flash('Страница успешно проверена', 'checked')
     except Exception:
-        flash('Произошла ошибка при проверке', 'error')
+        flash('Произошла ошибка при проверке', 'danger')
+    else:
+        flash('Страница успешно проверена', 'success')
     return redirect(url_for('get_site_information', id=id,))
 
 

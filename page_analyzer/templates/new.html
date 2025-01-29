@@ -3,26 +3,13 @@
 {% block title %}Анализатор страниц{% endblock %}
 
 {% block index %}
-
+{% with messages = get_flashed_messages(with_categories=true) %}
 {% if messages %}
-<div class="flash-message">
-  {% for category, message in messages %}
-    {% if category == 'in_base' %}
-      <div class="alert alert-info" role="alert">Страница уже существует</div>
-    {% endif %}
-    {% if category == 'success' %}
-      <div class="alert alert-success" role="alert">Страница успешно добавлена</div>
-    {% endif %}
-    {% if category == 'error' %}
-      <div class="alert alert-danger" role="alert">Произошла ошибка при проверке</div>
-    {% endif %}
-    {% if category == 'checked' %}
-      <div class="alert alert-success" role="alert">Страница успешно проверена</div>
-    {% endif %}
-  {% endfor %}
-</div>
-    {% endif %}
-
+{% for category, message in messages %}
+      <div class="alert alert-{{ category }}" role="alert">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
 
 <body>
   <main class="flex-grow-1">
