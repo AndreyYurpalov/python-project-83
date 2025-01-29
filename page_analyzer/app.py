@@ -37,13 +37,13 @@ DATABASE_URL = os.getenv('DATABASE_URL')
 @app.route('/')
 def index():
     messages = get_flashed_messages(with_categories=True)
-    value = request.args.get('value')
-    if value:
-        return render_template('index.html',
-                               messages=messages, value=value,)
-    else:
-        return render_template('index.html',
-                               messages=messages, status_code=422)
+    value = ''
+    if request.args.get('value'):
+        value = request.args.get('value')
+    return render_template('index.html',
+                           messages=messages, value=value, )
+
+
 
 
 @app.route('/urls')
@@ -62,20 +62,19 @@ def get_sites():
 @app.route('/urls', methods=['POST'])
 def get_site():
     url = request.form.to_dict().get('url')
-    if validators.url(url):
-        url = f'{urlparse(url).scheme}://{urlparse(url).netloc}'
-        if int(is_url(url)):
-            flash('Страница уже существует', 'in_base')
-        else:
-            name = url
-            created_at = date.today()
-            insert_data(name, created_at)
-            flash('Страница успешно добавлена', 'success')
-        id = get_id(url)[0]
-        return redirect(url_for('get_site_information', id=id))
-    else:
+    if not validators.url(url):
         flash('Некорректный URL', 'no_page')
-        return redirect(url_for('index', value=url), 422)
+        return  render_template('index.html', value=url), 422
+    url = f'{urlparse(url).scheme}://{urlparse(url).netloc}'
+    if int(is_url(url)):
+        flash('Страница уже существует', 'in_base')
+    else:
+        name = url
+        created_at = date.today()
+        insert_data(name, created_at)
+        flash('Страница успешно добавлена', 'success')
+    id = get_id(url)[0]
+    return redirect(url_for('get_site_information', id=id))
 
 
 @app.route('/urls/<id>', methods=['GET'])
