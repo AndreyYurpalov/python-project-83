@@ -10,6 +10,7 @@ from flask import (
     Flask,
     flash,
     get_flashed_messages,
+    make_response,
     redirect,
     render_template,
     request,
@@ -126,8 +127,10 @@ def get_check_site(id):
                                         description, time_check)
         flash('Страница успешно проверена', 'checked')
     except Exception:
+        response = make_response("<div>Произошла ошибка при проверке</div>")
+        response.status_code = 422
         flash('Произошла ошибка при проверке', 'error')
-    return redirect(url_for('get_site_information', id=id))
+    return redirect(url_for('get_site_information', id=id, response=response))
 
 
 if __name__ == '__main__':
