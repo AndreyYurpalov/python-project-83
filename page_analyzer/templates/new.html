@@ -21,12 +21,14 @@
     {% endif %}
   {% endfor %}
 </div>
-
     {% endif %}
+
+
 <body>
   <main class="flex-grow-1">
     <div class="container-lg mt-3">
       <h1>Сайт: {{ url }}</h1>
+
 
       <div class="table-responsive">
         <table class="table table-bordered table-hover text-nowrap" data-test="url">
@@ -47,10 +49,12 @@
         </table>
       </div>
     </div>
+
 <h2 class="mt-5 mb-3">Проверки</h2>
   <form method="post" action="{{ check }}">
     <input type="submit" class="btn btn-primary" value="Запустить проверку">
   </form>
+
 <div>
   <table class="table table-bordered table-hover" data-test="checks">
     <thead>
@@ -63,6 +67,7 @@
         <th>Дата создания</th>
       </tr>
     </thead>
+
       <tbody>
       {% for line in table %}
       <tr>
@@ -76,6 +81,7 @@
       {% endfor %}
       </tbody>
     </table>
+
 </div>
 </main>
 </body>
