@@ -10,7 +10,6 @@ from flask import (
     Flask,
     flash,
     get_flashed_messages,
-    make_response,
     redirect,
     render_template,
     request,
@@ -43,9 +42,8 @@ def index():
         return render_template('index.html',
                                messages=messages, value=value,)
     else:
-        code = request.args.get('code')
         return render_template('index.html',
-                               messages=messages, code=code)
+                               messages=messages, status_code=422)
 
 
 @app.route('/urls')
@@ -103,7 +101,7 @@ def get_site_information(id):
     return render_template('nopage.html')
 
 
-@app.route('/urls/<id>/checks', methods=['POST', 'GET'])
+@app.route('/urls/<id>/checks', methods=['POST'])
 def get_check_site(id):
     id = int(id)
     url = get_id_name_createdat(id)[1]
@@ -127,10 +125,8 @@ def get_check_site(id):
                                         description, time_check)
         flash('Страница успешно проверена', 'checked')
     except Exception:
-        response = make_response("<div>Произошла ошибка при проверке</div>")
-        response.status_code = 422
         flash('Произошла ошибка при проверке', 'error')
-    return redirect(url_for('get_site_information', id=id, response=response))
+    return redirect(url_for('get_site_information', id=id,))
 
 
 if __name__ == '__main__':
