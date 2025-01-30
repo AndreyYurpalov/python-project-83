@@ -73,12 +73,12 @@ def get_site():
     return redirect(url_for('get_site_information', id=id))
 
 
-@app.post('/urls/<id>')
+@app.post('/urls/<int:id>')
 def test_post(id):
     return render_template('new.html', id=id)
 
 
-@app.route('/urls/<id>', methods=['GET'])
+@app.route('/urls/<int:id>', methods=['GET'])
 def get_site_information(id):
     messages = get_flashed_messages(with_categories=True)
     data = get_id_name_createdat(id)
@@ -100,9 +100,9 @@ def get_site_information(id):
     return render_template('nopage.html'), 404
 
 
-@app.route('/urls/<id>/checks', methods=['POST'])
+@app.route('/urls/<int:id>/checks', methods=['POST'])
 def get_check_site(id):
-    id = int(id)
+    # id = int(id)
     url = get_id_name_createdat(id)[1]
     try:
         response = requests.get(f'{url}')
