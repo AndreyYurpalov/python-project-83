@@ -55,7 +55,6 @@ def get_sites():
 
 @app.route('/urls', methods=['POST'])
 def get_site():
-
     url = request.form.to_dict().get('url')
     if not validators.url(url):
         flash('Некорректный URL', 'no_page')
@@ -74,6 +73,11 @@ def get_site():
     return redirect(url_for('get_site_information', id=id))
 
 
+@app.post('/urls/<id>')
+def test_post(id):
+    return render_template('new.html', id=id)
+
+
 @app.route('/urls/<id>', methods=['GET'])
 def get_site_information(id):
     messages = get_flashed_messages(with_categories=True)
@@ -85,7 +89,6 @@ def get_site_information(id):
         insert_data(name, check_time)
         id, url, time = data[0], data[1], data[2]
         table = get_data_check(id)
-        check = f'/urls/{id}/checks'
         return render_template(
             'new.html',
             id=id,
@@ -93,8 +96,8 @@ def get_site_information(id):
             time=time,
             messages=messages,
             table=table,
-            check=check,)
-    return render_template('nopage.html')
+        )
+    return render_template('nopage.html'), 404
 
 
 @app.route('/urls/<id>/checks', methods=['POST'])
@@ -124,6 +127,11 @@ def get_check_site(id):
     else:
         flash('Страница успешно проверена', 'success')
     return redirect(url_for('get_site_information', id=id,))
+
+
+@app.errorhandler(404)
+def no_page(error):
+    return render_template('nopage.html'), 404
 
 
 if __name__ == '__main__':
