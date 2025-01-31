@@ -37,7 +37,7 @@
 
 <h2 class="mt-5 mb-3">Проверки</h2>
   <form method="post" action="/urls/{{ id }}/checks">
-    <input name="url" type="submit" class="btn btn-primary" value="Запустить проверку">
+    <input type="submit" class="btn btn-primary" value="Запустить проверку">
   </form>
 
 <div>
@@ -52,19 +52,20 @@
         <th>Дата создания</th>
       </tr>
     </thead>
-      <tbody>
+
+    <tbody>
       {% for line in table %}
       <tr>
-        <th style="font-weight: 400">{{ line[1] }}</th>
-        <th style="font-weight: 400">{{ line[2] }}</th>
-        <th style="font-weight: 400">{{ line[3] }}</th>
-        <th style="font-weight: 400">{{ line[4] }}</th>
-        <th style="font-weight: 400">{{ line[5] }}</th>
-        <th style="font-weight: 400">{{ line[6] }}</th>
+        <th class="fw-normal" >{{ line[1] }}</th>
+        <th class="fw-normal" >{{ line[2] }}</th>
+        <th class="fw-normal" >{{ line[3] }}</th>
+        <th class="fw-normal" >{{ line[4] }}</th>
+        <th class="fw-normal" >{{ line[5] }}</th>
+        <th class="fw-normal" >{{ line[6] }}</th>
       </tr>
       {% endfor %}
-      </tbody>
-    </table>
+    </tbody>
+  </table>
 
 </div>
     </div>
