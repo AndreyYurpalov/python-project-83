@@ -15,8 +15,6 @@
   <main class="flex-grow-1">
     <div class="container-lg mt-3">
       <h1>Сайт: {{ url }}</h1>
-
-
       <div class="table-responsive">
         <table class="table table-bordered table-hover text-nowrap" data-test="url">
           <tbody >
@@ -35,7 +33,7 @@
           </tbody>
         </table>
       </div>
-    </div>
+
 
 <h2 class="mt-5 mb-3">Проверки</h2>
   <form method="post" action="/urls/{{ id }}/checks">
@@ -54,7 +52,6 @@
         <th>Дата создания</th>
       </tr>
     </thead>
-
       <tbody>
       {% for line in table %}
       <tr>
@@ -70,6 +67,7 @@
     </table>
 
 </div>
+    </div>
 </main>
 </body>
 {% endblock %}
