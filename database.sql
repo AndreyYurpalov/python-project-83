@@ -15,7 +15,6 @@ CREATE TABLE IF NOT EXISTS public.url_checks
     title text,
     description text,
     created_at date NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT url_checks_pkey PRIMARY KEY (url_id),
     CONSTRAINT id FOREIGN KEY (id)
         REFERENCES public.urls (id) MATCH SIMPLE
         ON UPDATE NO ACTION
