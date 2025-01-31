@@ -1,5 +1,4 @@
 import os
-from datetime import date
 from urllib.parse import urlparse
 
 import requests
@@ -22,8 +21,8 @@ from page_analyzer.db_function import (
     get_id,
     get_id_name_createdat,
     get_max_date,
-    insert_check_date_whith_id_site,
-    insert_data,
+    insert_check_data_with_id_site,
+    insert_name_site,
     is_url,
 )
 
@@ -65,28 +64,17 @@ def get_site():
     if int(is_url(url)):
         flash('Страница уже существует', 'info')
     else:
-        name = url
-        created_at = date.today()
-        insert_data(name, created_at)
+        insert_name_site(url)
         flash('Страница успешно добавлена', 'success')
     id = get_id(url)[0]
     return redirect(url_for('get_site_information', id=id))
 
 
-@app.post('/urls/<int:id>')
-def test_post(id):
-    return render_template('new.html', id=id)
-
-
-@app.route('/urls/<int:id>', methods=['GET'])
+@app.route('/urls/<int:id>')
 def get_site_information(id):
     messages = get_flashed_messages(with_categories=True)
     data = get_id_name_createdat(id)
     if data:
-        data = get_id_name_createdat(id)
-        check_time = data[2]
-        name = data[1]
-        insert_data(name, check_time)
         id, url, time = data[0], data[1], data[2]
         table = get_data_check(id)
         return render_template(
@@ -102,7 +90,6 @@ def get_site_information(id):
 
 @app.route('/urls/<int:id>/checks', methods=['POST'])
 def get_check_site(id):
-    # id = int(id)
     url = get_id_name_createdat(id)[1]
     try:
         response = requests.get(f'{url}')
@@ -119,18 +106,17 @@ def get_check_site(id):
             if tag.get('name') == 'description':
                 description = tag.get('content')
         status_code = response.status_code
-        time_check = date.today()
-        insert_check_date_whith_id_site(id, status_code, h1, title,
-                                        description, time_check)
+        insert_check_data_with_id_site(id, status_code, h1, title, description)
     except Exception:
         flash('Произошла ошибка при проверке', 'danger')
+        return redirect(url_for('get_site_information', id=id))
     else:
         flash('Страница успешно проверена', 'success')
     return redirect(url_for('get_site_information', id=id,))
 
 
 @app.errorhandler(404)
-def no_page(error):
+def no_page():
     return render_template('nopage.html'), 404
 
 
