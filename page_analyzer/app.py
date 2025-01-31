@@ -19,10 +19,10 @@ from page_analyzer.db_function import (
     get_data,
     get_data_check,
     get_id,
-    get_id_name_createdat,
+    get_id_name_created_at,
     get_max_date,
     insert_check_data_with_id_site,
-    insert_name_site,
+    insert_name_url,
     is_url,
 )
 
@@ -66,7 +66,7 @@ def get_site():
         id = get_id(url)[0]
         return redirect(url_for('get_site_information', id=id))
     else:
-        insert_name_site(url)
+        insert_name_url(url)
         flash('Страница успешно добавлена', 'success')
         id = get_id(url)[0]
         return redirect(url_for('get_site_information', id=id))
@@ -75,7 +75,7 @@ def get_site():
 @app.route('/urls/<int:id>')
 def get_site_information(id):
     messages = get_flashed_messages(with_categories=True)
-    data = get_id_name_createdat(id)
+    data = get_id_name_created_at(id)
     if data:
         id, url, time = data[0], data[1], data[2]
         table = get_data_check(id)
@@ -92,9 +92,13 @@ def get_site_information(id):
 
 @app.route('/urls/<int:id>/checks', methods=['POST'])
 def get_check_site(id):
-    url = get_id_name_createdat(id)[1]
+    url = get_id_name_created_at(id)[1]
     try:
         response = requests.get(f'{url}')
+        response.raise_for_status()
+    except requests.exceptions.RequestException:
+        flash('Произошла ошибка при проверке', 'danger')
+    else:
         soup = BeautifulSoup(response.text, 'html.parser')
         h1 = ''
         if soup.find('h1'):
@@ -109,10 +113,6 @@ def get_check_site(id):
                 description = tag.get('content')
         status_code = response.status_code
         insert_check_data_with_id_site(id, status_code, h1, title, description)
-    except Exception:
-        flash('Произошла ошибка при проверке', 'danger')
-        return redirect(url_for('get_site_information', id=id))
-    else:
         flash('Страница успешно проверена', 'success')
     return redirect(url_for('get_site_information', id=id,))
 
