@@ -7,15 +7,12 @@ load_dotenv()
 DATABASE_URL = os.getenv('DATABASE_URL')
 
 
-def insert_data(data, created_at):
+def insert_name_site(name):
     connection = psycopg2.connect(DATABASE_URL)
     with connection.cursor() as curs:
         sql_data_createdat = """INSERT INTO public.urls 
-                                (name, created_at) 
-                                SELECT %s, %s WHERE NOT EXISTS 
-                                (SELECT 1 FROM public.urls 
-                                WHERE name = %s);"""
-        curs.execute(sql_data_createdat, (data, created_at, data,))
+                                (name) VALUES (%s);"""
+        curs.execute(sql_data_createdat, (name,))
         connection.commit()
         connection.close()
 
@@ -67,25 +64,15 @@ def get_id_name_createdat(id):
         return result
 
 
-def insert_check_id_date(id, created_at):
-    connection = psycopg2.connect(DATABASE_URL)
-    with connection.cursor() as curs:
-        sql_id_createdat = "SELECT * FROM public.urls WHERE id = %s;"
-        curs.execute(sql_id_createdat, (id, created_at,))
-        connection.commit()
-        connection.close()
-
-
-def insert_check_date_whith_id_site(id, status_code, h1, title,
-                                    description, created_at):
+def insert_check_data_with_id_site(id, status_code, h1, title, description):
     connection = psycopg2.connect(DATABASE_URL)
     with connection.cursor() as curs:
         sql_all_data = """INSERT INTO public.url_checks 
                           (id, url_id, status_code, h1, title, 
-                          description, created_at)
-                          VALUES (%s, default, %s, %s, %s, %s, %s);"""
+                          description)
+                          VALUES (%s, default, %s, %s, %s, %s);"""
         curs.execute(sql_all_data,
-                     (id, status_code, h1, title, description, created_at,))
+                     (id, status_code, h1, title, description,))
         connection.commit()
         connection.close()
 
