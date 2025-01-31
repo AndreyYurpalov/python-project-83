@@ -108,7 +108,7 @@ def get_check_site(id):
         status_code = response.status_code
         insert_check_data_with_id_site(id, status_code, h1, title, description)
     except Exception:
-        flash('Произошла ошибка при проверке!!!!!!!!!!!!!!!!', 'danger')
+        flash('Произошла ошибка при проверке', 'danger')
         return redirect(url_for('get_site_information', id=id))
     else:
         flash('Страница успешно проверена', 'success')
