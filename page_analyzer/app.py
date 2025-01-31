@@ -63,11 +63,13 @@ def get_site():
     url = f'{urlparse(url).scheme}://{urlparse(url).netloc}'
     if int(is_url(url)):
         flash('Страница уже существует', 'info')
+        id = get_id(url)[0]
+        return redirect(url_for('get_site_information', id=id))
     else:
         insert_name_site(url)
         flash('Страница успешно добавлена', 'success')
-    id = get_id(url)[0]
-    return redirect(url_for('get_site_information', id=id))
+        id = get_id(url)[0]
+        return redirect(url_for('get_site_information', id=id))
 
 
 @app.route('/urls/<int:id>')
