@@ -17,8 +17,6 @@ CREATE TABLE IF NOT EXISTS public.url_checks
     created_at date NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT id FOREIGN KEY (id)
         REFERENCES public.urls (id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
 );
 
 
