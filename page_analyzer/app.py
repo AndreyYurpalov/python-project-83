@@ -55,21 +55,22 @@ def get_sites():
 @app.route('/urls', methods=['POST'])
 def get_site():
     url = request.form.to_dict().get('url')
-    if validators.url(url) and len(url) <= 255:
+    if len(url) <= 255:
         url = f'{urlparse(url).scheme}://{urlparse(url).netloc}'
-        if int(is_url(url)):
-            flash('Страница уже существует', 'info')
-            id = get_id(url)[0]
-        else:
-            insert_name_url(url)
-            flash('Страница успешно добавлена', 'success')
-            id = get_id(url)[0]
-        return redirect(url_for('get_site_information', id=id))
+        if validators.url(url):
+            if int(is_url(url)):
+                flash('Страница уже существует', 'info')
+                id = get_id(url)[0]
+            else:
+                insert_name_url(url)
+                flash('Страница успешно добавлена', 'success')
+                id = get_id(url)[0]
+            return redirect(url_for('get_site_information', id=id))
     else:
         flash('Некорректный URL', 'no_page')
         messages = get_flashed_messages(with_categories=True)
         return render_template('index.html',
-                               messages=messages, value=url), 422
+                           messages=messages, value=url), 422
 
 
 @app.route('/urls/<int:id>')
@@ -118,7 +119,7 @@ def get_check_site(id):
 
 
 @app.errorhandler(404)
-def no_page():
+def no_page(error):
     return render_template('nopage.html'), 404
 
 
