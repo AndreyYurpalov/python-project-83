@@ -1,10 +1,16 @@
 import os
+from urllib.parse import urlparse
 
 import psycopg2
 from dotenv import load_dotenv
 
 load_dotenv()
 DATABASE_URL = os.getenv('DATABASE_URL')
+
+
+def get_domain(url: str) -> str:
+    domain = '://'.join([urlparse(url).scheme, urlparse(url).netloc])
+    return domain
 
 
 def insert_name_url(name):

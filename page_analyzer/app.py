@@ -1,5 +1,4 @@
 import os
-from urllib.parse import urlparse
 
 import requests
 import validators
@@ -18,6 +17,7 @@ from flask import (
 from page_analyzer.db_function import (
     get_data,
     get_data_check,
+    get_domain,
     get_id,
     get_id_name_created_at,
     get_max_date,
@@ -55,19 +55,19 @@ def get_sites():
 @app.route('/urls', methods=['POST'])
 def get_site():
     url = request.form.to_dict().get('url')
-    if len(url) <= 255:
-        url = f'{urlparse(url).scheme}://{urlparse(url).netloc}'
-        if validators.url(url):
-            if int(is_url(url)):
-                flash('Страница уже существует', 'info')
-                id = get_id(url)[0]
-            else:
-                insert_name_url(url)
-                flash('Страница успешно добавлена', 'success')
-                id = get_id(url)[0]
-            return redirect(url_for('get_site_information', id=id))
+    url_length = len(url)
+    url = get_domain(url)
+    if validators.url(url) and url_length <= 255:
+        if int(is_url(url)):
+            flash('Страница уже существует', 'info')
+            id = get_id(url)[0]
+        else:
+            insert_name_url(url)
+            flash('Страница успешно добавлена', 'success')
+            id = get_id(url)[0]
+        return redirect(url_for('get_site_information', id=id))
     else:
-        flash('Некорректный URL', 'no_page')
+        flash('Некорректный URL', 'danger')
         messages = get_flashed_messages(with_categories=True)
         return render_template('index.html',
                            messages=messages, value=url), 422
