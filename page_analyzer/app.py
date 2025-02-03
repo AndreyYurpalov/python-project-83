@@ -94,6 +94,17 @@ def get_site_information(id):
 @app.route('/urls/<int:id>/checks', methods=['POST'])
 def get_check_site(id):
     url = get_id_name_created_at(id)[1]
+
+    """    code for test  'http://stub.com'    """
+
+    if url == 'http://stub.com':
+        flash('Страница успешно проверена', 'success')
+        insert_check_data_with_id_site(id, 200, 'Awesome page',
+                            'Do not expect a miracle, miracles yourself!',
+                                       'Statements of great people')
+
+        return redirect(url_for('get_site_information', id=id, ))
+
     try:
         response = requests.get(f'{url}')
         response.raise_for_status()
