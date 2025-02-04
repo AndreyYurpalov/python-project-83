@@ -95,11 +95,9 @@ def get_site_information(id):
 def get_check_site(id):
     url = get_id_name_created_at(id)[1]
     try:
-        response = requests.get(f'{url}')
+        timeout = 5
+        response = requests.get(f'{url}', timeout=timeout)
         response.raise_for_status()
-    except requests.exceptions.RequestException:
-        flash('Произошла ошибка при проверке', 'danger')
-    else:
         soup = BeautifulSoup(response.text, 'html.parser')
         h1 = ''
         if soup.find('h1'):
@@ -113,9 +111,13 @@ def get_check_site(id):
             if tag.get('name') == 'description':
                 description = tag.get('content')
         status_code = response.status_code
+        print(type(response.status_code), status_code)
         insert_check_data_with_id_site(id, status_code, h1, title, description)
         flash('Страница успешно проверена', 'success')
-    return redirect(url_for('get_site_information', id=id,))
+        return redirect(url_for('get_site_information', id=id, ))
+    except requests.exceptions.RequestException:
+        flash('Произошла ошибка при проверке', 'danger')
+        return redirect(url_for('get_site_information', id=id, ))
 
 
 @app.errorhandler(404)
