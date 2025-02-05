@@ -95,23 +95,18 @@ def get_site_information(id):
 def get_check_site(id):
     url = get_id_name_created_at(id)[1]
     try:
-        timeout = 5
-        response = requests.get(f'{url}', timeout=timeout)
+        response = requests.get(f'{url}')
         response.raise_for_status()
         soup = BeautifulSoup(response.text, 'html.parser')
-        h1 = ''
-        if soup.find('h1'):
-            h1 = soup.find('h1').text
-        title = ''
-        if soup.find('title'):
-            title = soup.find('title').text
-        meta_tags = soup.find_all('meta')
+        h1 = soup.find('h1').text if soup.find('h1') else ''
+        title = soup.find('title').text if soup.find('title') else ''
         description = ''
+        meta_tags = soup.find_all('meta')
         for tag in meta_tags:
-            if tag.get('name') == 'description':
-                description = tag.get('content')
+            if tag.get('name', '').lower() == 'description':
+                description = tag.get('content', '')
+                break
         status_code = response.status_code
-        print(type(response.status_code), status_code)
         insert_check_data_with_id_site(id, status_code, h1, title, description)
         flash('Страница успешно проверена', 'success')
         return redirect(url_for('get_site_information', id=id, ))
