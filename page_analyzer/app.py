@@ -113,6 +113,9 @@ def get_check_site(id):
     except requests.exceptions.RequestException:
         flash('Произошла ошибка при проверке', 'danger')
         return redirect(url_for('get_site_information', id=id, ))
+    except Exception:
+        flash('Произошла ошибка при проверке', 'danger')
+        return redirect(url_for('get_site_information', id=id, ))
 
 
 @app.errorhandler(404)
