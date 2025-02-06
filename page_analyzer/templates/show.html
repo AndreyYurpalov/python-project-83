@@ -12,21 +12,21 @@
       <table class="table table-bordered table-hover text-nowrap" data-test="urls">
         <thead>
           <tr>
-            <th>ID</th>
-            <th >Имя</th>
-            <th>Последняя проверка</th>
-            <th>Код ответа</th>
+            <td>ID</td>
+            <td>Имя</td>
+            <td>Последняя проверка</td>
+            <td>Код ответа</td>
           </tr>
         </thead>
         <tbody>
         {% for site in sites %}
           <tr style="font-weight: 400">
-            <th style="font-weight: 400">{{ site[0] }}</th>
-            <th style="font-weight: 400"><a href="urls/{{ site[0] }}">{{ site[1] }}</a></th>
+            <td style="font-weight: 400">{{ site[0] }}</td>
+            <td style="font-weight: 400"><a href="urls/{{ site[0] }}">{{ site[1] }}</a></td>
             {% for tab in table %}
               {% if tab[0] == site[0] and tab[1] == 200 %}
-              <th style="font-weight: 400">{{ tab[2] }}</th>
-              <th style="font-weight: 400">{{ tab[1] }}</th>
+              <td style="font-weight: 400">{{ tab[2] }}</td>
+              <td style="font-weight: 400">{{ tab[1] }}</td>
               {% endif %}
             {% endfor %}
           </tr>
