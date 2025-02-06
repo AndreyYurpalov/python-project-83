@@ -3,6 +3,7 @@ from urllib.parse import urlparse
 
 import psycopg2
 from dotenv import load_dotenv
+from psycopg2.extras import NamedTupleCursor
 
 load_dotenv()
 DATABASE_URL = os.getenv('DATABASE_URL')
@@ -58,7 +59,7 @@ def get_id_name_created_at(_id):
 
 def get_data_check(_id):
     connection = psycopg2.connect(DATABASE_URL)
-    with connection.cursor() as curs:
+    with connection.cursor(cursor_factory=NamedTupleCursor) as curs:
         sql_id = """SELECT * FROM public.url_checks 
                       WHERE id = %s ORDER BY url_id DESC;"""
         curs.execute(sql_id, (_id,))
