@@ -9,7 +9,7 @@ def insert_name_url(name, connection):
         connection.commit()
 
 
-def get_data(connection):
+def get_url(connection):
     with connection.cursor() as curs:
         sql_select = "SELECT * FROM public.urls ORDER BY id DESC;"
         curs.execute(sql_select)
@@ -18,7 +18,7 @@ def get_data(connection):
         return result
 
 
-def get_id(url, connection):
+def get_url_id(url, connection):
     with connection.cursor() as curs:
         sql_url = "SELECT id FROM public.urls WHERE name = %s;"
         curs.execute(sql_url, (url,))
@@ -27,7 +27,7 @@ def get_id(url, connection):
         return result
 
 
-def get_id_name_created_at(_id, connection):
+def get_url_domain(_id, connection):
     with connection.cursor() as curs:
         sql_id = "SELECT * FROM public.urls WHERE id = %s;"
         curs.execute(sql_id, (_id,))
@@ -36,7 +36,7 @@ def get_id_name_created_at(_id, connection):
         return result
 
 
-def get_data_check(_id, connection):
+def get_url_check_result(_id, connection):
     with connection.cursor(cursor_factory=NamedTupleCursor) as curs:
         sql_id = """SELECT * FROM public.url_checks 
                       WHERE id = %s ORDER BY url_id DESC;"""
@@ -46,7 +46,7 @@ def get_data_check(_id, connection):
         return result
 
 
-def get_max_date(connection):
+def get_url_inspection_date(connection):
     with connection.cursor() as curs:
         sql_select = """SELECT id, status_code, MAX(created_at)
                        AS max_created_at FROM public.url_checks 
@@ -57,7 +57,7 @@ def get_max_date(connection):
         return result
 
 
-def is_url(url, connection):
+def is_url_in_database(url, connection):
     with connection.cursor() as curs:
         sql_url = """SELECT CAST
                      (CASE WHEN EXISTS
@@ -69,7 +69,7 @@ def is_url(url, connection):
         return result
 
 
-def insert_check_data_with_id_site(_id, connection, status_code, h1,
+def insert_check_result_with_id_url(_id, connection, status_code, h1,
                                    title, description):
     with connection.cursor() as curs:
         sql_all_data = """INSERT INTO public.url_checks 
