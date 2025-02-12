@@ -1,6 +1,12 @@
 from urllib.parse import urlparse
 
+import psycopg2
 from bs4 import BeautifulSoup
+
+
+def get_connection(db_url):
+    connection = psycopg2.connect(db_url)
+    return connection
 
 
 def get_domain(url: str) -> str:
