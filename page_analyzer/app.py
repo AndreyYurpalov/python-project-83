@@ -107,7 +107,7 @@ def get_check_site(id):
 
 
 @app.errorhandler(404)
-def no_page():
+def no_page(error):
     return render_template('nopage.html'), 404
 
 
