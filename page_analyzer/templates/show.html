@@ -21,12 +21,12 @@
         <tbody>
         {% for site in sites %}
           <tr style="font-weight: 400">
-            <td style="font-weight: 400">{{ site[0] }}</td>
-            <td style="font-weight: 400"><a href="urls/{{ site[0] }}">{{ site[1] }}</a></td>
+            <td style="font-weight: 400">{{ site['id'] }}</td>
+            <td style="font-weight: 400"><a href="urls/{{ site['id'] }}">{{ site[1] }}</a></td>
             {% for tab in table %}
-              {% if tab[0] == site[0] and tab[1] == 200 %}
-              <td style="font-weight: 400">{{ tab[2] }}</td>
-              <td style="font-weight: 400">{{ tab[1] }}</td>
+              {% if tab['id'] == site['id'] and tab['status_code'] == 200 %}
+              <td style="font-weight: 400">{{ tab['max_created_at'] }}</td>
+              <td style="font-weight: 400">{{ tab['status_code'] }}</td>
               {% endif %}
             {% endfor %}
           </tr>

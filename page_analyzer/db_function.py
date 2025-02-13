@@ -73,14 +73,14 @@ def is_url_in_database(url):
                      (SELECT 1 FROM public.urls WHERE name = %s)
                      THEN 1 ELSE 0 END AS BIT);"""
         curs.execute(sql_url, (url,))
-        result = curs.fetchone()[0]
+        result = int(curs.fetchone().bit)
         return result
 
 
 def insert_check_result_with_id_url(_id, status_code, h1,
                                    title, description):
     with connection as con:
-        curs = con.cursor(cursor_factory=NamedTupleCursor)
+        curs = con.cursor()
         sql_all_data = """INSERT INTO public.url_checks 
                           (id, url_id, status_code, h1, title, 
                           description)

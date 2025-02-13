@@ -56,12 +56,12 @@
     <tbody>
       {% for line in table %}
       <tr>
-        <td class="fw-normal" >{{ line[1] }}</td>
-        <td class="fw-normal" >{{ line[2] }}</td>
-        <td class="fw-normal" >{{ line[3] }}</td>
-        <td class="fw-normal" >{{ line[4] }}</td>
-        <td class="fw-normal" >{{ line[5] }}</td>
-        <td class="fw-normal" >{{ line[6] }}</td>
+        <td class="fw-normal" >{{ line['url_id'] }}</td>
+        <td class="fw-normal" >{{ line['status_code'] }}</td>
+        <td class="fw-normal" >{{ line['h1'] }}</td>
+        <td class="fw-normal" >{{ line['title'] }}</td>
+        <td class="fw-normal" >{{ line['description'] }}</td>
+        <td class="fw-normal" >{{ line['created_at'] }}</td>
       </tr>
       {% endfor %}
     </tbody>
