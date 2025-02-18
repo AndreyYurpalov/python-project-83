@@ -3,7 +3,8 @@ from psycopg2.extras import NamedTupleCursor
 
 
 def get_connection(db_url):
-    return psycopg2.connect(db_url)
+    connection = psycopg2.connect(db_url)
+    return connection
 
 
 def insert_url(connection, name):
