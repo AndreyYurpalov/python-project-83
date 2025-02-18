@@ -26,11 +26,10 @@ from page_analyzer.functions import (
     url_parser,
 )
 
+load_dotenv()
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
-
-
-load_dotenv()
 
 DATABASE_URL = os.getenv('DATABASE_URL')
 conn = get_connection(DATABASE_URL)
